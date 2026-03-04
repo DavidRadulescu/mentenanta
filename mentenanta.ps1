@@ -1,20 +1,25 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force
 Write-Host "St" -ForegroundColor Green
 
-#CCleaner
-Write-Host "`nCCleaner Downloands" -ForegroundColor Cyan
-$downloadPath = "$env:USERPROFILE\Downloads\ccsetup.exe"
-$ccleanerUrl = "https://download.ccleaner.com/ccsetup.exe"
-$OriginalProgressPreference = $ProgressPreference
-$ProgressPreference = 'SilentlyContinue'
-try {
-    Invoke-WebRequest -Uri $ccleanerUrl -OutFile $downloadPath -UseBasicParsing
-    Write-Host "Descarcat la: $downloadPath" -ForegroundColor Green
-    Start-Process -FilePath $downloadPath -ArgumentList "/S" -Wait
-} catch {
-    Write-Host "Err" -ForegroundColor Red
-    $ProgressPreference = $OriginalProgressPreference
+#CleanUp
+Write-Host "`nDisk Cleanup" -ForegroundColor Cyan
+$runNumber = 1234
+$registryPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches"
+$itemsToClean = @(
+    "Temporary Files", 
+    "Thumbnail Cache", 
+    "Downloaded Program Files", 
+    "Internet Cache Files"
+)
+foreach ($item in $itemsToClean) {
+    $keyPath = "$registryPath\$item"
+    if (Test-Path $keyPath) {
+        Set-ItemProperty -Path $keyPath -Name "StateFlags$runNumber" -Value 2 -Type DWord -ErrorAction SilentlyContinue
+    }
 }
+Write-Host "Stergere" -ForegroundColor Cyan
+Start-Process -FilePath "cleanmgr.exe" -ArgumentList "/sagerun:$runNumber" -Wait
+Write-Host "OK" -ForegroundColor Green
 
 #Updateuri
 Write-Host "`nWin Updates" -ForegroundColor Cyan
@@ -36,6 +41,6 @@ sfc /scannow
 
 #SSD
 Write-Host "`nSSD opt" -ForegroundColor Cyan
-Get-Volume | Where-Object DriveType -eq 'Fixed' | Optimize-Volume -ReTrim -Verbose
+Get-Volume | Where-Object { $_.DriveType -eq 'Fixed' -and $_.DriveLetter } | Optimize-Volume -ReTrim -Verbose
 Write-Host "`nGata" -ForegroundColor Green
 Write-Host "Restart pt updateuri." -ForegroundColor Yellow
