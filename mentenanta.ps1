@@ -18,7 +18,7 @@ try {
 
 #Updateuri
 Write-Host "`nWin Updates" -ForegroundColor Cyan
-Start-Process "ms-settings:windowsupdate-action"
+Start-Process "ms-settings:windowsupdate"
 Write-Host "Vezi fereastra" -ForegroundColor Green
 
 #Comenzi cmd
