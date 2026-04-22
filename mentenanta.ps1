@@ -40,7 +40,7 @@ Write-Host "Vezi fereastra" -ForegroundColor Green
 #Winget upgrade --all dar fara sa iti ceara confirmare pentru fiecare pachet (toate tagurile dupa --all sunt responsabile, de adaugat comentarii la ele daca nu se doresc)
 Write-Host "`nWinget" -ForegroundColor Cyan 
 winget upgrade --all --silent --accept-package-agreements --accept-source-agreements
-Write-Host "Gata cu winget"
+Write-Host "Gata cu winget" -ForegroundColor Green
 
 #Office 
 Write-Host "`nUpdate suita Office" -ForegroundColor Cyan 
