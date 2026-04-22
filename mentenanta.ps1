@@ -37,10 +37,11 @@ Write-Host "`nWin Updates" -ForegroundColor Cyan
 Start-Process "ms-settings:windowsupdate"
 Write-Host "Vezi fereastra" -ForegroundColor Green
 
-#Winget upgrade --all dar fara sa iti ceara confirmare pentru fiecare pachet (toate tagurile dupa --all sunt responsabile, de adaugat comentarii la ele daca nu se doresc)
+<#Winget upgrade --all dar fara sa iti ceara confirmare pentru fiecare pachet (toate tagurile dupa --all sunt responsabile, de adaugat comentarii la ele daca nu se doresc)
+In caz de eroare la sursa pentru winget, I.E 'Source is outdated' trebuie sa se ruleze winget source reset --force inainte si dupa sa fie rulat din nou #>
 Write-Host "`nWinget" -ForegroundColor Cyan 
 winget upgrade --all --silent --accept-package-agreements --accept-source-agreements
-Write-Host "Gata cu winget"
+Write-Host "Gata cu winget" -ForegroundColor Green 
 
 #Office 
 Write-Host "`nUpdate suita Office" -ForegroundColor Cyan 
