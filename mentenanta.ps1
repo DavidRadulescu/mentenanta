@@ -37,6 +37,11 @@ Write-Host "`nWin Updates" -ForegroundColor Cyan
 Start-Process "ms-settings:windowsupdate"
 Write-Host "Vezi fereastra" -ForegroundColor Green
 
+#Winget upgrade --all dar fara sa iti ceara confirmare pentru fiecare pachet (toate tagurile dupa --all sunt responsabile, de adaugat comentarii la ele daca nu se doresc)
+Write-Host "`nWinget" -ForegroundColor Cyan 
+winget upgrade --all --silent --accept-package-agreements --accept-source-agreements
+Write-Host "Gata cu winget"
+
 #Office 
 Write-Host "`nUpdate suita Office" -ForegroundColor Cyan 
 $officeC2R = "$env:ProgramFiles\Common Files\microsoft shared\ClickToRun\OfficeC2RClient.exe"
